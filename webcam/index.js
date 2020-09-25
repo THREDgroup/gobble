@@ -6,7 +6,6 @@ var btnCapture = document.getElementById( "btn-capture" );
 // The stream & capture
 var stream = document.getElementById( "stream" );
 var capture = document.getElementById( "capture" );
-var snapshot = document.getElementById( "snapshot" );
 
 // The video stream
 var cameraStream = null;
@@ -74,10 +73,6 @@ function captureSnapshot() {
 
         img.src		= datastream;
         img.width	= 240;
-
-        snapshot.innerHTML = '';
-
-        snapshot.appendChild( img );
 
         var newImage = new Image()
         newImage.src = datastream;
