@@ -1,3 +1,5 @@
+// Started from here: https://html5.tutorials24x7.com/blog/how-to-capture-image-from-camera
+
 // The buttons to start & stop stream and to capture the image
 var btnStart = document.getElementById( "btn-start" );
 var btnStop = document.getElementById( "btn-stop" );
@@ -6,6 +8,8 @@ var btnCapture = document.getElementById( "btn-capture" );
 // The stream & capture
 var stream = document.getElementById( "stream" );
 var capture = document.getElementById( "capture" );
+var streamjq = $( "#stream" );
+var capturejq = $( "#capture" );
 
 // The video stream
 var cameraStream = null;
@@ -15,7 +19,6 @@ btnStart.addEventListener( "click", startStreaming );
 btnStop.addEventListener( "click", stopStreaming );
 btnCapture.addEventListener( "click", captureSnapshot );
 
-var datastream = '';
 
 // Start Streaming
 function startStreaming() {
@@ -63,19 +66,29 @@ function stopStreaming() {
 function captureSnapshot() {
 
     if( null != cameraStream ) {
+        // Set width and height
+        let width = streamjq.width();
+        let height = streamjq.height();
 
-        var ctx = capture.getContext( '2d' );
-        var img = new Image();
+        capture.width = width;
+        capture.height = height;
+
+        capturejq.removeClass("d-none");
+        streamjq.addClass("d-none");
+
+        let ctx = capture.getContext( '2d' );
+        let img = new Image();
 
         ctx.drawImage( stream, 0, 0, capture.width, capture.height );
 
-        datastream = capture.toDataURL( "image/png" )
+        let datastream = capture.toDataURL( "image/png" )
 
         img.src		= datastream;
-        img.width	= 240;
 
-        var newImage = new Image()
-        newImage.src = datastream;
-        lc.saveShape(LC.createShape('Image', {x: 10, y: 10, image: newImage}));
+        stopStreaming();
+
+        get_landmarks(datastream, ctx)
+
+
     }
 }
