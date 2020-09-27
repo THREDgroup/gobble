@@ -77,17 +77,12 @@ function captureSnapshot() {
         streamjq.addClass("d-none");
 
         let ctx = capture.getContext( '2d' );
-        let img = new Image();
 
         ctx.drawImage( stream, 0, 0, capture.width, capture.height );
 
-        let datastream = capture.toDataURL( "image/png" )
-
-        img.src		= datastream;
-
         stopStreaming();
 
-        get_landmarks(datastream, ctx)
+        get_landmarks();
 
 
     }
