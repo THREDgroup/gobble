@@ -26,47 +26,63 @@
     <script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0/dist/tf-converter.js"></script>
 
     <!-- You must explicitly require a TF.js backend if you're not using the tfs union bundle. -->
-    <script src="https://unpkg.com/@tensorflow/tfjs-backend-cpu@2.1.0/dist/tf-backend-cpu.js"></script>
-    <!-- <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>-->
+<!--    <script src="https://unpkg.com/@tensorflow/tfjs-backend-cpu@2.1.0/dist/tf-backend-cpu.js"></script>-->
+     <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
     <!-- Alternatively you can use the WASM backend: <script src="https://unpkg.com/@tensorflow/tfjs-backend-wasm@2.1.0/dist/tf-backend-wasm.js"></script> -->
-
     <script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6/dist/handpose.js"></script>
 
 </head>
 
+
 <body>
-<div class="container pt-5 text-center">
-    <div class="btn-group py-2">
-        <button id="btn-start" type="button" class="btn btn-success">Start Streaming</button>
-        <button id="btn-stop" type="button" class="btn btn-danger">Stop Streaming</button>
-        <button id="btn-capture" type="button" class="btn btn-primary">Capture Image</button>
-    </div>
 
-    <div class="play-area">
-        <canvas id="capture" class=""></canvas>
-        <video id="stream"></video>
-        <canvas id="better"></canvas>
-    </div>
-</div>
-
-
-<div class="container pt-5">
-    <script src="handpose/main.js"></script>
-    <script src="handpose/offset.min.js"></script>
-</div>
-
-
-<div class="container pt-5">
+<div class="container-fluid p-5">
     <div class="fs-container">
         <div id="lc"></div>
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="turkeyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Capture your turkey once it looks about right!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center" id="spinner">
+                    <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div id="canvas-wrapper" class="d-flex justify-content-center">
+                    <canvas id="output" style=""></canvas>
+                    <video id="video" playsinline></video>
+                </div>
 
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-capture" class="btn btn-primary" data-dismiss="modal">Capture Turkey</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="handpose/main.js"></script>
+<script src="handpose/offset.min.js"></script>
 <script src="js_libs/react-0.14.3.js"></script>
 <script src="js_libs/literallycanvas.js"></script>
-<script src="webcam/main.js"></script>
+<!--<script src="webcam/main.js"></script>-->
 
+<script>
+    $("#turkeyModal").modal({backdrop: 'static', keyboard: false});
+</script>
 
 <script type="text/javascript">
     var lc = LC.init(document.getElementById("lc"), {

@@ -1,11 +1,20 @@
 /*For literally canvas*/
 .fs-container {
     width: auto;
-    height: 600px;
+    height: 80%;
 }
 
 .literally {
     width: 100%;
     height: 100%;
     position: relative;
+}
+
+#video {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    visibility: hidden;
+    width: auto;
+    height: auto;
+    position: absolute;
 }
