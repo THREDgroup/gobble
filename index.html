@@ -26,9 +26,8 @@
     <script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0/dist/tf-converter.js"></script>
 
     <!-- You must explicitly require a TF.js backend if you're not using the tfs union bundle. -->
-<!--    <script src="https://unpkg.com/@tensorflow/tfjs-backend-cpu@2.1.0/dist/tf-backend-cpu.js"></script>-->
-     <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
-    <!-- Alternatively you can use the WASM backend: <script src="https://unpkg.com/@tensorflow/tfjs-backend-wasm@2.1.0/dist/tf-backend-wasm.js"></script> -->
+    <!--    <script src="https://unpkg.com/@tensorflow/tfjs-backend-cpu@2.1.0/dist/tf-backend-cpu.js"></script>-->
+    <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
     <script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6/dist/handpose.js"></script>
 
 </head>
@@ -43,7 +42,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="turkeyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="turkeyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,12 +62,11 @@
                     <canvas id="output" style=""></canvas>
                     <video id="video" playsinline></video>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="btn-capture" class="btn btn-primary" data-dismiss="modal">Capture Turkey</button>
+                <button type="button" id="btn-capture" class="btn btn-primary" data-dismiss="modal">Capture Turkey
+                </button>
             </div>
         </div>
     </div>
@@ -78,19 +77,30 @@
 <script src="handpose/offset.min.js"></script>
 <script src="js_libs/react-0.14.3.js"></script>
 <script src="js_libs/literallycanvas.js"></script>
-<!--<script src="webcam/main.js"></script>-->
 
 <script>
     $("#turkeyModal").modal({backdrop: 'static', keyboard: false});
 </script>
 
 <script type="text/javascript">
-    var lc = LC.init(document.getElementById("lc"), {
+    let el = document.getElementById("lc");
+
+    let Turkey = function (lc) {  // take lc as constructor arg
+        return {
+            name: 'Capture Turkey',
+            iconName: 'turkey',
+            optionsStyle: 'null'
+        }
+    };
+
+    let lc = LC.init(el, {
         imageURLPrefix: './assets/lc-images',
         toolbarPosition: 'bottom',
         defaultStrokeWidth: 8,
-        strokeWidths: [2, 4, 8, 16, 32]
+        strokeWidths: [2, 4, 8, 16, 32],
+        tools: LC.defaultTools.concat([Turkey])
     });
+
 </script>
 </body>
 </html>

@@ -172,7 +172,8 @@ const landmarksRealTime = async (video) => {
 
         if (predictions.length > 0) {
             const result = predictions[0].landmarks;
-            drawKeypoints(result);
+            draw_hand(result);
+            // drawKeypoints(result);
         }
 
         rafID = requestAnimationFrame(frameLandmarks);
@@ -205,7 +206,6 @@ function clip_image(keypoints) {
 
     // Clip palm
     ctx.beginPath();
-    ctx.lineWidth = 2;
     clip_polygon(keypoints, [0, 1, 2, 5, 9, 13, 17, 0], r, ctx);
 
     // Clip fingers
@@ -223,6 +223,36 @@ function clip_image(keypoints) {
     // clip_polygon(fingerLookupIndices.thumb.slice(2,5), r, ctx)
 
     ctx.clip();
+
+}
+
+function draw_hand(keypoints) {
+    // Compute radius
+    let r = Math.sqrt(Math.pow((keypoints[5][0]-keypoints[9][0]), 2) + Math.pow((keypoints[5][1]-keypoints[9][1]), 2))*0.5;
+
+    // Clip fingers
+    ctx.strokeStyle = 'rgba(0,0,0,0.0)';
+
+    ctx.beginPath(); ctx.fillStyle = 'brown'; clip_polygon(keypoints, fingerLookupIndices.indexFinger, r, ctx); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle = 'red'; clip_polygon(keypoints, fingerLookupIndices.middleFinger, r, ctx); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle = 'darkorange'; clip_polygon(keypoints, fingerLookupIndices.ringFinger, r, ctx); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle = 'goldenrod'; clip_polygon(keypoints, fingerLookupIndices.pinky, r, ctx); ctx.fill();
+    // clip_polygon([1, 2], r, ctx)
+    ctx.beginPath(); ctx.fillStyle = 'saddlebrown'; clip_polygon(keypoints, [2, 3], r, ctx); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle = 'saddlebrown'; clip_polygon(keypoints, [3, 4], r, ctx); ctx.fill();
+    // clip_polygon(fingerLookupIndices.indexFinger.slice(1,5), r, ctx)
+    // clip_polygon(fingerLookupIndices.middleFinger.slice(1,5), r, ctx)
+    // clip_polygon(fingerLookupIndices.ringFinger.slice(1,5), r, ctx)
+    // clip_polygon(fingerLookupIndices.pinky.slice(1,5), r, ctx)
+    // clip_polygon(fingerLookupIndices.thumb.slice(2,5), r, ctx)
+
+    // Clip palm
+    ctx.beginPath();
+    ctx.fillStyle = 'saddlebrown';
+    clip_polygon(keypoints, [0, 1, 2, 5, 9, 13, 17, 0], r, ctx);
+    ctx.fill();
+
+
 
 }
 
